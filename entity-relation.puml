@@ -1,0 +1,41 @@
+@startuml El Cheemspleo
+entity User {
+    id : <<PK>>
+    name : string
+    company_id : <<FK>>
+}
+
+entity CV {
+    id : <<PK>>
+    user_id : <<FK>>
+    storage_file_route : string
+}
+
+entity Company {
+    id : <<PK>>
+    name : string
+}
+
+entity Job_Offer {
+    id : <<PK>>
+    name : string
+    description : string
+    post_date : date
+    end_date : date
+    company_id : <<FK>>
+    state : string
+}
+
+entity Postulation {
+    user_id : <<PK, FK>>
+    job_offer_id : <<PK, FK>>
+    state : string
+}
+
+User ||--o{ CV
+' To consider if a User could have more than one company to offer jobs.
+Company |o--|{ User 
+Company ||--o{ Job_Offer
+Postulation }o--|| User 
+Postulation }o--|| Job_Offer
+@enduml
