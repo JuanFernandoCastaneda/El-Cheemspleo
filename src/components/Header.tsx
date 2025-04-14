@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { localization } from "../localization";
+import ProfileInfo from "./ProfileInfo";
 
 export default function Header() {
   return <header>
@@ -7,5 +8,6 @@ export default function Header() {
     <nav>
       <NavLink to="/">{localization.home}</NavLink>
     </nav>
+    <ProfileInfo/>
   </header>
 }
