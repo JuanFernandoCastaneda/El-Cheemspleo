@@ -1,19 +1,27 @@
 @startuml El Cheemspleo
 entity User {
     id : <<PK>>
-    name : string
+    first_name : string
+    last_name : string
     company_id : <<FK>>
 }
 
 entity CV {
     id : <<PK>>
     user_id : <<FK>>
+    description : string
     storage_file_route : string
 }
 
 entity Company {
     id : <<PK>>
     name : string
+}
+
+entity CompanyEmployee {
+    id_company : <<PK, FK>>
+    id_user : <<PK, FK>>
+    role : Company_Role
 }
 
 entity Job_Offer {
@@ -29,12 +37,24 @@ entity Job_Offer {
 entity Postulation {
     user_id : <<PK, FK>>
     job_offer_id : <<PK, FK>>
-    state : string
+    state : Postulation_State
+}
+
+enum Company_Role {
+    ADMIN
+    RECRUITER
+    WORKER
+}
+
+enum Postulation_State {
+    POSTULATED
+    APPLICATION_VIEWED
 }
 
 User ||--o{ CV
 ' To consider if a User could have more than one company to offer jobs.
-Company |o--|{ User 
+CompanyEmployee |o--|| User 
+CompanyEmployee }o--|| Company
 Company ||--o{ Job_Offer
 Postulation }o--|| User 
 Postulation }o--|| Job_Offer
