@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { localization } from "../localization";
+import { localization } from "../services/localization";
 import ProfileInfo from "./ProfileInfo";
 
 export default function Header() {

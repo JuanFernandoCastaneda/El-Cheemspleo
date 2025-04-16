@@ -1,4 +1,4 @@
-import { AuthComponent } from "../context/AuthContext";
+import { AuthComponent } from "../../context/AuthContext";
 
 export default function Login() {
   return <AuthComponent/>

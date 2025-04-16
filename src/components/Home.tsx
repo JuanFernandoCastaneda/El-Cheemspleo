@@ -1,5 +1,5 @@
 import SearchBar from "./SearchBar";
-import { localization } from "../localization";
+import { localization } from "./services/localization";
 
 export default function Home() {
   return (

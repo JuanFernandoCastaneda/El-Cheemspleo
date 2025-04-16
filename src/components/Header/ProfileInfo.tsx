@@ -1,7 +1,7 @@
 import { Link } from "react-router";
-import { localization } from "../localization";
-import { signOut } from "../context/AuthContext";
-import { useUserInfo } from "../context/UserInfoContextLayout";
+import { localization } from "../services/localization";
+import { signOut } from "../../context/AuthContext";
+import { useUserInfo } from "../../context/UserInfoContextLayout";
 
 function ProfileInfo() {
   const userInfo = useUserInfo();

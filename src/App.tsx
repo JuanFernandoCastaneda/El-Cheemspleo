@@ -3,7 +3,7 @@ import "./App.css";
 import Home from "./components/Home";
 import SearchResult from "./components/SearchResult";
 import Layout from "./components/layouts/layout";
-import Login from "./components/Login";
+import Login from "./components/Header/Login";
 import Test from "./components/Test";
 import { useSession } from "./context/AuthContext";
 import { useLastUrl } from "./context/LastUrlContext";
