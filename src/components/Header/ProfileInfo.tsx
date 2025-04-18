@@ -12,12 +12,15 @@ function ProfileInfo() {
         <Link to="/login">{localization.logIn}</Link>
       ) : (
         <>
+          <Link to="/profile">{localization.profile}</Link>
           {userInfo == "NoInfo" ? (
             <p>LLENA LA INFO MEN</p>
           ) : (
             <p>{userInfo.firstName}</p>
           )}
-          <button onClick={signOut}>{localization.signOut}</button>
+          <>
+            <button onClick={signOut}>{localization.signOut}</button>
+          </>
         </>
       )}
     </>

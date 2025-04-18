@@ -8,6 +8,7 @@ import Test from "./components/Test";
 import { useSession } from "./context/AuthContext";
 import { useLastUrl } from "./context/LastUrlContext";
 import { UserInfoContextLayout } from "./context/UserInfoContextLayout";
+import { Profile } from "./components/Profile";
 
 function App() {
   const session = useSession();
@@ -23,6 +24,7 @@ function App() {
             element={session ? <Navigate to={lastUrl} /> : <Login />}
           />
           <Route path="search" element={<SearchResult />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="test" element={<Test />} />
         </Route>
       </Route>

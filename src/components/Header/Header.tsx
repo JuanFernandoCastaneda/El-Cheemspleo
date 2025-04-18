@@ -7,7 +7,7 @@ export default function Header() {
     <h1>El Cheemspleo</h1>
     <nav>
       <NavLink to="/">{localization.home}</NavLink>
+      <ProfileInfo/>
     </nav>
-    <ProfileInfo/>
   </header>
 }
