@@ -1,4 +1,4 @@
-import { localization } from "./services/localization";
+import { localization } from "../services/localization";
 
 const Profile: React.FC = () => {
   return (

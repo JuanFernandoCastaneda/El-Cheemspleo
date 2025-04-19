@@ -1,6 +1,18 @@
 import LocalizedStrings from "react-localization";
 
-export const localization = new LocalizedStrings({
+type NeededThingies = {
+  home: string;
+  catchPhrase: string;
+  searchInstruction: string;
+    logIn: string;
+    signOut: string;
+    profile: string;
+    profileFirstName: string;
+    profileLastName: string;
+    profileInfo: string;
+}
+
+export const localization = new LocalizedStrings<NeededThingies>({
   en: {
     home: "Home",
     catchPhrase: "Find your dream job",
@@ -9,7 +21,8 @@ export const localization = new LocalizedStrings({
     signOut: "Sign out",
     profile: "Profile",
     profileFirstName: "First name",
-    profileLastName: "Last name"
+    profileLastName: "Last name",
+    profileInfo: "Profile information"
   },
   es: {
     home: "Inicio",
@@ -19,6 +32,7 @@ export const localization = new LocalizedStrings({
     signOut: "Cerrar sesión",
     profile: "Perfil",
     profileFirstName: "Nombres",
-    profileLastName: "Apellidos"
+    profileLastName: "Apellidos",
+    profileInfo: "Información del perfil"
   },
 });
