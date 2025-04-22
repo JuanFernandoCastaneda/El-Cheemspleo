@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserInfo, useUserObject } from "../../context/UserInfoContextLayout";
+import { UserInfo, useUserObject } from "../../context/UserInfoContext/UserInfoContextLayout";
 import { localization } from "../../services/localization";
 
 export const UpdatableInput: React.FC<{

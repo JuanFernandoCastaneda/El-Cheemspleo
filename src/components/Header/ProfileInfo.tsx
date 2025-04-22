@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { localization } from "../../services/localization";
 import { signOut } from "../../context/AuthContext";
-import { useUserObject } from "../../context/UserInfoContextLayout";
+import { useUserObject } from "../../context/UserInfoContext/UserInfoContextLayout";
 
 const ProfileInfo: React.FC<{className?: string}> = ({className}) => {
   const userObject = useUserObject();

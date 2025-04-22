@@ -1,5 +1,5 @@
 import { supabase } from "@supabase/auth-ui-shared";
-import { UserInfo } from "../context/UserInfoContextLayout";
+import { UserInfo } from "../context/UserInfoContext/UserInfoContextLayout";
 import { supabaseClient } from "./supabase";
 
 const dbEquivalence = {
@@ -7,9 +7,6 @@ const dbEquivalence = {
   firstName: "first_name",
   lastName: "last_name",
 } as const;
-
-type a = typeof dbEquivalence;
-type b = keyof a;
 
 const getUserInfo = async (id: string): Promise<UserInfo | null> => {
   const { data } = await supabaseClient.from("User").select().eq("id", id);
@@ -35,9 +32,6 @@ const registerUser = async (
     .insert({ id: id, first_name: firstName, last_name: lastName });
   return error;
 };
-
-type c = keyof UserInfo;
-type d = UserInfo[keyof UserInfo];
 
 /**
  * @param id

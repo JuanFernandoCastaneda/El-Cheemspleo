@@ -7,7 +7,7 @@ import Login from "./components/Header/Login";
 import Test from "./components/Test";
 import { useSession } from "./context/AuthContext";
 import { useLastUrl } from "./context/LastUrlContext";
-import { UserObjectContextLayout } from "./context/UserInfoContextLayout";
+import { UserObjectContextLayout } from "./context/UserInfoContext/UserInfoContextLayout";
 import { Profile } from "./components/Profile";
 
 function App() {

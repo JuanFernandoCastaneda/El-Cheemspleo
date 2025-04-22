@@ -6,8 +6,8 @@ import {
   useState,
 } from "react";
 import { Outlet } from "react-router";
-import { useSession } from "./AuthContext";
-import { getUserInfo, updateUserField } from "../db/user";
+import { useSession } from "../AuthContext";
+import { getUserInfo, updateUserField } from "../../db/user";
 import { PostgrestError } from "@supabase/supabase-js";
 
 type UserInfo = {
@@ -25,7 +25,7 @@ type UserObjectStatus = UserObject | "NoSession" | "NoContext";
 
 const UserObjectContext = createContext<UserObjectStatus>("NoContext");
 
-const UserInfoStatusProvider: React.FC<{ children: ReactNode }> = ({
+const UserObjectStatusProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const session = useSession();
@@ -64,14 +64,6 @@ const UserInfoStatusProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-const UserObjectContextLayout = () => {
-  return (
-    <UserInfoStatusProvider>
-      <Outlet />
-    </UserInfoStatusProvider>
-  );
-};
-
 const useUserObject = () => {
   const context = useContext(UserObjectContext);
   if (context === "NoContext") {
@@ -80,4 +72,12 @@ const useUserObject = () => {
   return context;
 };
 
-export { UserObjectContextLayout, useUserObject, type UserInfo };
+const UserObjectContextLayout = () => {
+  return (
+    <UserObjectStatusProvider>
+      <Outlet />
+    </UserObjectStatusProvider>
+  );
+};
+
+export { UserObjectStatusProvider, UserObjectContextLayout, useUserObject, type UserInfo };

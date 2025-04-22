@@ -1,4 +1,4 @@
-import { useUserObject } from "../context/UserInfoContextLayout";
+import { useUserObject } from "../context/UserInfoContext/UserInfoContextLayout";
 import { localization } from "../services/localization";
 import { UpdatableInput } from "./utils/UpdatableInput";
 
