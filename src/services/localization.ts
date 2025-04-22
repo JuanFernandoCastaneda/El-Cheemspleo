@@ -4,13 +4,15 @@ type NeededThingies = {
   home: string;
   catchPhrase: string;
   searchInstruction: string;
-    logIn: string;
-    signOut: string;
-    profile: string;
-    profileFirstName: string;
-    profileLastName: string;
-    profileInfo: string;
-}
+  logIn: string;
+  signOut: string;
+  profile: string;
+  profileFirstName: string;
+  profileLastName: string;
+  profileInfo: string;
+  update: string;
+  profileSessionError: string;
+};
 
 export const localization = new LocalizedStrings<NeededThingies>({
   en: {
@@ -22,7 +24,9 @@ export const localization = new LocalizedStrings<NeededThingies>({
     profile: "Profile",
     profileFirstName: "First name",
     profileLastName: "Last name",
-    profileInfo: "Profile information"
+    profileInfo: "Profile information",
+    update: "Update",
+    profileSessionError: "Trying to access profile without session",
   },
   es: {
     home: "Inicio",
@@ -33,6 +37,8 @@ export const localization = new LocalizedStrings<NeededThingies>({
     profile: "Perfil",
     profileFirstName: "Nombres",
     profileLastName: "Apellidos",
-    profileInfo: "Información del perfil"
+    profileInfo: "Información del perfil",
+    update: "Actualizar",
+    profileSessionError: "Intentando acceder a perfil sin sesión activa",
   },
 });

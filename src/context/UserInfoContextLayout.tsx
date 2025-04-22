@@ -8,6 +8,7 @@ import {
 import { Outlet } from "react-router";
 import { useSession } from "./AuthContext";
 import { getUserInfo, updateUserField } from "../db/user";
+import { PostgrestError } from "@supabase/supabase-js";
 
 type UserInfo = {
   id: string;
@@ -17,7 +18,7 @@ type UserInfo = {
 
 type UserObject = {
   userInfo: UserInfo | null;
-  updateUserInfoProperty: Function;
+  updateUserInfoProperty: <K extends keyof UserInfo>(property: K, newValue: UserInfo[K]) => Promise<PostgrestError | null>;
 };
 
 type UserObjectStatus = UserObject | "NoSession" | "NoContext";
