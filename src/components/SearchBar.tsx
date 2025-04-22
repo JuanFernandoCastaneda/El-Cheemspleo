@@ -30,7 +30,7 @@ export default function SearchBar({ className }: SearchBarProps) {
         onChange={(e) => setSearchInput(e.target.value)}
         onKeyDown={(event) => event.key == "Enter" && searchButtonAction()}
         placeholder={localization.searchInstruction}
-        className="bg-white border border-gray-400 rounded-xs"
+        className="bg-white border border-gray-400 rounded-xs grow p-2"
       ></input>
       <button onClick={searchButtonAction} className="roudned-xs bg-orange-500 aspect-1/1">
         <img src="/search.svg" className="p-2" />

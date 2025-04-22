@@ -1,5 +1,15 @@
+import { supabase } from "@supabase/auth-ui-shared";
 import { UserInfo } from "../context/UserInfoContextLayout";
 import { supabaseClient } from "./supabase";
+
+const dbEquivalence = {
+  id: "id",
+  firstName: "first_name",
+  lastName: "last_name",
+} as const;
+
+type a = typeof dbEquivalence;
+type b = keyof a;
 
 const getUserInfo = async (id: string): Promise<UserInfo | null> => {
   const { data } = await supabaseClient.from("User").select().eq("id", id);
@@ -26,4 +36,28 @@ const registerUser = async (
   return error;
 };
 
-export { getUserInfo, registerUser };
+type c = keyof UserInfo;
+type d = UserInfo[keyof UserInfo];
+
+/**
+ * @param id
+ * @param field
+ * @param newValue
+ * @returns If it returns null, then there was an error
+ */
+const updateUserField = async <K extends keyof UserInfo>(
+  id: string,
+  field: K,
+  newValue: UserInfo[K]
+) => {
+  if (!(field in dbEquivalence)) return null;
+  const { error } = await supabaseClient
+    .from("User")
+    .update({ [dbEquivalence[field]]: newValue })
+    .eq("id", id)
+    .select();
+  console.log(error);
+  return error;
+};
+
+export { getUserInfo, registerUser, updateUserField };

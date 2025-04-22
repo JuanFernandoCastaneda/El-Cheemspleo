@@ -1,7 +1,13 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Outlet } from "react-router";
 import { useSession } from "./AuthContext";
-import { getUserInfo } from "../db/user";
+import { getUserInfo, updateUserField } from "../db/user";
 
 type UserInfo = {
   id: string;
@@ -9,45 +15,68 @@ type UserInfo = {
   lastName: string;
 };
 
-type UserInfoStatus = UserInfo | "NoInfo" | "NoSession" | "NoContext"
+type UserObject = {
+  userInfo: UserInfo | null;
+  updateUserInfoProperty: Function;
+};
 
-const UserInfoContext = createContext<UserInfoStatus>("NoContext");
+type UserObjectStatus = UserObject | "NoSession" | "NoContext";
 
-const UserInfoProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const UserObjectContext = createContext<UserObjectStatus>("NoContext");
+
+const UserInfoStatusProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const session = useSession();
-  const [userInfo, setUserInfo] = useState<UserInfoStatus>("NoSession");
+  const [userObjectStatus, setUserObjectStatus] =
+    useState<UserObjectStatus>("NoSession");
 
   useEffect(() => {
     if (session) {
       getUserInfo(session.user.id).then((response) => {
-        setUserInfo(response ? response: "NoInfo")
+        setUserObjectStatus(
+          response
+            ? { userInfo: response, updateUserInfoProperty }
+            : { userInfo: null, updateUserInfoProperty }
+        );
       });
     } else {
-      setUserInfo("NoSession");
+      setUserObjectStatus("NoSession");
     }
   }, [session]);
 
+  const updateUserInfoProperty = async <K extends keyof UserInfo>(
+    property: K,
+    newValue: UserInfo[K]
+  ) => {
+    if (userObjectStatus === "NoSession") {
+      throw Error("Calling update on no session mate?");
+    }
+    // Session will always exist if userInfo is not "NoSession"
+    return updateUserField(session!.user.id, property, newValue);
+  };
+
   return (
-    <UserInfoContext.Provider value={userInfo}>
+    <UserObjectContext.Provider value={userObjectStatus}>
       {children}
-    </UserInfoContext.Provider>
+    </UserObjectContext.Provider>
   );
 };
 
-const UserInfoContextLayout = () => {
+const UserObjectContextLayout = () => {
   return (
-    <UserInfoProvider>
-      <Outlet/>
-    </UserInfoProvider>
-  )
-}
+    <UserInfoStatusProvider>
+      <Outlet />
+    </UserInfoStatusProvider>
+  );
+};
 
-const useUserInfo = () => {
-  const context = useContext(UserInfoContext);
-    if (context === "NoContext") {
-      throw new Error("useUserInfo must be used within a UserInfoProvider");
-    }
-    return context;
-}
+const useUserObject = () => {
+  const context = useContext(UserObjectContext);
+  if (context === "NoContext") {
+    throw new Error("useUserInfo must be used within a UserInfoProvider");
+  }
+  return context;
+};
 
-export { UserInfoContextLayout, useUserInfo, type UserInfo };
+export { UserObjectContextLayout, useUserObject, type UserInfo };

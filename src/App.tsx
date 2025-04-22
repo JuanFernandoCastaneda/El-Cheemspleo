@@ -2,12 +2,12 @@ import { Routes, Route, Navigate } from "react-router";
 import "./App.css";
 import Home from "./components/Home";
 import SearchResult from "./components/SearchResult";
-import Layout from "./layouts/layout";
+import Layout from "./layouts/Layout";
 import Login from "./components/Header/Login";
 import Test from "./components/Test";
 import { useSession } from "./context/AuthContext";
 import { useLastUrl } from "./context/LastUrlContext";
-import { UserInfoContextLayout } from "./context/UserInfoContextLayout";
+import { UserObjectContextLayout } from "./context/UserInfoContextLayout";
 import { Profile } from "./components/Profile";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <Routes>
-      <Route element={<UserInfoContextLayout />}>
+      <Route element={<UserObjectContextLayout />}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route
@@ -24,7 +24,7 @@ function App() {
             element={session ? <Navigate to={lastUrl} /> : <Login />}
           />
           <Route path="search" element={<SearchResult />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={session ? <Profile /> : <Navigate to="/login"/> }/>
           <Route path="test" element={<Test />} />
         </Route>
       </Route>

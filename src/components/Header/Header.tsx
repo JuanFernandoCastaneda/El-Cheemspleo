@@ -1,9 +1,9 @@
 import { Navbar } from "./Navbar";
 import { Top } from "./Top";
 
-export default function Header() {
+export const Header: React.FC<{className?: string}> = ({className}) => {
   return (
-    <header className="w-full">
+    <header className={className}>
       <Top/>
       {/**<Navbar/> */}
     </header>
