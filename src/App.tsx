@@ -1,37 +1,34 @@
 import { Routes, Route, Navigate } from "react-router";
 import "./App.css";
 import Home from "./components/Home";
-import { BrowserRouter } from "react-router";
 import SearchResult from "./components/SearchResult";
-import Layout from "./components/layouts/layout";
-import { createContext, useState } from "react";
-import { authComponent, useSession } from "./auth";
-import { Session } from "@supabase/supabase-js";
-import LocationTracker from "./components/LocationTracker";
-
-export const SessionContext = createContext<Session | null>(null);
+import Layout from "./layouts/Layout";
+import Login from "./components/Header/Login";
+import Test from "./components/Test";
+import { useSession } from "./context/AuthContext";
+import { useLastUrl } from "./context/LastUrlContext";
+import { UserObjectContextLayout } from "./context/UserInfoContext/UserInfoContextLayout";
+import { Profile } from "./components/Profile";
 
 function App() {
   const session = useSession();
-  const [lastUrl, setLastUrl] = useState("/");
+  const lastUrl = useLastUrl();
 
   return (
-    <SessionContext value={session}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LocationTracker setLastUrl={setLastUrl} />}>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route
-                path="login"
-                element={session ? <Navigate to={lastUrl} /> : authComponent}
-              />
-              <Route path="search" element={<SearchResult />} />
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </SessionContext>
+    <Routes>
+      <Route element={<UserObjectContextLayout />}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route
+            path="login"
+            element={session ? <Navigate to={lastUrl} /> : <Login />}
+          />
+          <Route path="search" element={<SearchResult />} />
+          <Route path="profile" element={session ? <Profile /> : <Navigate to="/login"/> }/>
+          <Route path="test" element={<Test />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
