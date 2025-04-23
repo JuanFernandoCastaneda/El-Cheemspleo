@@ -3,7 +3,7 @@ import {
   UserObjectStatusProvider,
   useUserObject,
 } from "./UserInfoContextLayout";
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useSession } from "../AuthContext";
 import { getUserInfo } from "../../db/user";
 
@@ -28,19 +28,19 @@ const DummyComponent: React.FC = () => {
   );
 };
 
+const renderDummyComponent = async () => {
+  await act(async () => {
+    render(
+      <UserObjectStatusProvider>
+        <DummyComponent />
+      </UserObjectStatusProvider>
+    );
+  });
+};
+
 describe("<UserInfoContext/> first render", () => {
   const mockUseSession = useSession as Mock;
   const mockGetUserInfo = getUserInfo as Mock;
-
-  const renderDummyComponent = async () => {
-    await act(async () => {
-      render(
-        <UserObjectStatusProvider>
-          <DummyComponent />
-        </UserObjectStatusProvider>
-      );
-    });
-  };
 
   it("User has no info", async () => {
     mockUseSession.mockReturnValue({ user: { id: 1 } });

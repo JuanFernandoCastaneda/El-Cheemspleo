@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
-import { UserInfo, useUserObject } from "../../context/UserInfoContext/UserInfoContextLayout";
+import { useState } from "react";
+import {
+  UserInfo,
+  useUserObject,
+} from "../../context/UserInfoContext/UserInfoContextLayout";
 import { localization } from "../../services/localization";
 
 export const UpdatableInput: React.FC<{
@@ -7,10 +10,6 @@ export const UpdatableInput: React.FC<{
   toUpdateProperty: keyof UserInfo;
 }> = ({ label, toUpdateProperty }) => {
   const userObject = useUserObject();
-
-  useEffect(() => {
-    console.log(userObject)
-  }, [])
 
   const initialValue =
     userObject === "NoSession" || !userObject.userInfo
@@ -26,24 +25,27 @@ export const UpdatableInput: React.FC<{
       alert("Calling UpdatableInput without Session");
       return;
     }
-    console.log(inputValue)
+    console.log(inputValue);
     if (inputValue) {
       const error = await userObject.updateUserInfoProperty(
         toUpdateProperty,
         inputValue
       );
-      console.log(error);
+      error && alert(error);
     }
   };
 
   return (
-    <label>
-      {label}
+    <label className="mb-2">
+      <h3 className="">{label}</h3>
       <input
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        className="mr-2 border"
       ></input>
-      <button onClick={updateProperty}>{localization.update}</button>
+      {inputValue !== initialValue && (
+        <button onClick={updateProperty} className="p-1 shadow-md rounded-md text-white bg-blue-600 hover:bg-blue-700">{localization.update}</button>
+      )}
     </label>
   );
 };

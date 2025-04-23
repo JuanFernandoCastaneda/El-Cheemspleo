@@ -1,4 +1,3 @@
-import { supabase } from "@supabase/auth-ui-shared";
 import { UserInfo } from "../context/UserInfoContext/UserInfoContextLayout";
 import { supabaseClient } from "./supabase";
 
@@ -50,7 +49,6 @@ const updateUserField = async <K extends keyof UserInfo>(
     .update({ [dbEquivalence[field]]: newValue })
     .eq("id", id)
     .select();
-  console.log(error);
   return error;
 };
 

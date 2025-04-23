@@ -32,7 +32,7 @@ const UserObjectStatusProvider: React.FC<{ children: ReactNode }> = ({
   const [userObjectStatus, setUserObjectStatus] =
     useState<UserObjectStatus>("NoSession");
 
-  useEffect(() => {
+  const updateObjectStatus = () => {
     if (session) {
       getUserInfo(session.user.id).then((response) => {
         setUserObjectStatus(
@@ -44,14 +44,24 @@ const UserObjectStatusProvider: React.FC<{ children: ReactNode }> = ({
     } else {
       setUserObjectStatus("NoSession");
     }
+  } 
+
+  useEffect(() => {
+    updateObjectStatus()
   }, [session]);
 
+  // It needs to be called on both conditions. Otherwise on reloads does not work.
+  useEffect(() => {
+    updateObjectStatus()
+  })
+
+  // Seems like session is updated when you send a update petition and thus there is no need to update UserInfo manually.
   const updateUserInfoProperty = async <K extends keyof UserInfo>(
     property: K,
     newValue: UserInfo[K]
   ) => {
     if (userObjectStatus === "NoSession") {
-      throw Error("Calling update on no session mate?");
+      throw Error("Calling update with no session");
     }
     // Session will always exist if userInfo is not "NoSession"
     return updateUserField(session!.user.id, property, newValue);
